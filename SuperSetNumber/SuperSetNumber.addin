@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">    
+    <Name>SuperSetNumber</Name>
+    <Assembly>
+        C:\Users\Alexander\source\repos\SuperSetNumber\SuperSetNumber\bin\Debug\SuperSetNumber.dll
+    </Assembly>
+    <ClientId>a994d188-1859-405e-aaff-5bad19909eeb</ClientId>
+    <FullClassName>SuperSetNumber.App</FullClassName>
+    <VendorId>BIM-STARTER</VendorId>
+    <VendorDescription>bim-starter.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
