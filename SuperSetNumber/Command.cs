@@ -31,7 +31,6 @@ namespace SuperSetNumber
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //char uchar = '‪';
             char uchar = (char)8234;
 
             Document doc = commandData.Application.ActiveUIDocument.Document;
@@ -46,13 +45,13 @@ namespace SuperSetNumber
                 }
                 else
                 {
-                    message = "Выберите ось, видовой экран, лист или помещение, для которого нужно задать номер.";
+                    message = MyStrings.ErrorNoSelectedElements;
                     return Result.Failed;
                 }
             }
             if (selids.Count > 1)
             {
-                message = "Выберите только один элемент.";
+                message = MyStrings.ErrorNoSelectedElements;
                 return Result.Failed;
             }
 
@@ -63,27 +62,27 @@ namespace SuperSetNumber
             if(selem is Autodesk.Revit.DB.Architecture.Room)
             {
                 numberParam = BuiltInParameter.ROOM_NUMBER;
-                labelText = "Укажите требуемый номер помещения:";
+                labelText = MyStrings.LabelRoomNumber;
             }
             else if(selem is Grid)
             {
                 numberParam = BuiltInParameter.DATUM_TEXT;
-                labelText = "Укажите требуемый номер оси:";
+                labelText = MyStrings.LabelGridNumber;
             }
             else if(selem is Viewport)
             {
                 numberParam = BuiltInParameter.VIEWPORT_DETAIL_NUMBER;
-                labelText = "Укажите требуемый номер видового экрана:";
+                labelText = MyStrings.LabelViewportNumber;
             }
             else if(selem is ViewSheet)
             {
                 numberParam = BuiltInParameter.SHEET_NUMBER;
-                labelText = "Укажите требуемый номер листа";
+                labelText = MyStrings.LabelSheetNumber;
             }
 
             if(numberParam == BuiltInParameter.INVALID)
             {
-                message = "Поддерживаются только Оси, Видовые экраны, Листы или Помещения";
+                message = MyStrings.ErrorSupportedElements;
                 return Result.Failed;
             }
 
@@ -125,17 +124,17 @@ namespace SuperSetNumber
 
             using (Transaction t = new Transaction(doc))
             {
-                t.Start("Заполнить номер");
+                t.Start(MyStrings.TransactionName);
 
                 Parameter finalNumberParam = selem.get_Parameter(numberParam);
                 if(finalNumberParam is null)
                 {
-                    message = "Не удалось получить параметр номера";
+                    message = MyStrings.ErrorFailedToGetNumberParam;
                     return Result.Failed;
                 }
                 if(finalNumberParam.IsReadOnly)
                 {
-                    message = "Параметр номер недоступен для записи";
+                    message = MyStrings.ErrorParamReadonly;
                     return Result.Failed;
                 }
 
